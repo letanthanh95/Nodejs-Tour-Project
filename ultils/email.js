@@ -1,0 +1,39 @@
+const nodemailer=require('nodemailer');
+
+const sendEmail=async options=>{
+    //1) create a transporter
+    const transporter=nodemailer.createTransport({
+        host:process.env.EMAIL_HOST,
+        port:process.env.EMAIL_PORT,
+        auth:{
+            user:process.env.EMAIL_USERNAME,
+            pass:process.env.EMAIL_PASSWORD
+        }
+        // Activate in gmail "less secure app" option
+    });
+    // var transporter = nodemailer.createTransport({
+    //     host: "smtp.mailtrap.io",
+    //     port: 2525,
+    //     auth: {
+    //       user: "ddd852d5fee586",
+    //       pass: "fa4a7d96139b14"
+    //     }
+    //   });
+
+
+    //2)define the email options
+
+    const mailOptions={
+        from:'letanthanh<hello@hello.com>',
+        to:options.email,
+        subject:options.subject,
+        text:options.message,
+        //html:
+    }
+
+
+    //3)actually send the email
+    await transporter.sendMail(mailOptions);
+};
+
+module.exports=sendEmail;
